@@ -520,3 +520,4 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
         Route::delete('/delete/{id}', [Admin\Contacts\ContactsController::class, 'delete'])->name('delete');
     });
 });
+
