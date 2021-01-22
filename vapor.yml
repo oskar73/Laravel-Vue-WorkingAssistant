@@ -1,0 +1,23 @@
+id: 40521
+name: bizinaboxsite
+asset-domain: assets.bizinaboxsite.com
+separate-vendor: true
+environments:
+    staging:
+        memory: 1024
+        timeout: 28
+        cli-memory: 512
+        cli-timeout: 600
+        runtime: docker
+        build:
+          - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+          - 'php artisan event:cache'
+          - 'npm install --save --legacy-peer-deps && npm run prod && rm -rf node_modules && rm -rf public/assets/vendors/contentbuilder'
+        deploy:
+          - 'php artisan --version'
+          - 'php artisan migrate --force'
+        domain:
+          - bizinaboxsite.com
+          - '*.bizinaboxsite.com'
+        firewall:
+          rate-limit: 1000 # for dev only

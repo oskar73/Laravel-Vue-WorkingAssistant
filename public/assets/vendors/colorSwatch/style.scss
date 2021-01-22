@@ -1,0 +1,447 @@
+@import 'variables';
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+    color: $text-color;
+    text-align: left;
+    font-size: 13px;
+    transition: color 0.8s ease;
+
+    &.light  {
+        color: $text-color-dark;
+        transition: color 0.8s ease;
+    }
+}
+
+div { box-sizing: border-box; }
+
+.content {
+    position: relative;
+    width: 100%;
+}
+
+.mode {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 1;
+    padding: 7px;
+    border-radius: 50px;
+    background: $dark;
+    box-shadow: 0 0 4px $light;
+
+    @media only screen and (max-width : $phoneMedia) {
+        top: 15px;
+        left: 15px;
+    }
+
+    .light & {
+        background: $light-dark;
+        box-shadow: 0 0 4px $dark;
+    }
+
+    #light-icon,
+    #dark-icon {
+        display: block;
+        float: left;
+        padding: 15px;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 30px;
+        border:none;
+        cursor: pointer;
+        outline: none;
+
+        @media only screen and (max-width : $phoneMedia) {
+            padding: 10px;
+            background-size: 20px;
+        }
+    }
+
+    #light-icon {
+        background-image: url('../../img/colorSwatch/moon-light.svg');
+    }
+
+    #dark-icon {
+        display: none;
+        background-image: url('../../img/colorSwatch/moon.svg');
+    }
+}
+
+.colors {
+    padding: 0 25px 50px 25px;
+    background-color: $dark-light;
+    box-shadow: 0 0 3px lighten($dark, 18%) inset;
+    transition: background-color 0.8s ease;
+
+    .light & {
+        background-color: $light;
+        box-shadow: 0 0 3px lighten($light, 18%) inset;
+        transition: background-color 0.8s ease;
+
+    }
+
+    .title {
+        padding: 50px 0 20px 0;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 28px;
+        letter-spacing: 1px;
+        //text-shadow: 0 0 3px $light-dark;
+        transition: text-shadow 0.8s ease;
+        background: linear-gradient(to right, #f8f8f8 20%, #333 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        .light & {
+            //text-shadow: 0 0 3px lighten($dark-light, 40%);
+            transition: text-shadow 0.8s ease;
+            background: linear-gradient(to right, #F1F3F4 20%, #222 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+    .wrap-btn {
+        text-align: center;
+
+        .rdm-btn {
+            max-width: 200px;
+            margin-bottom: 50px;
+            padding: 16px 20px;
+            background: $rdm-btn;
+            color: $text-color;
+            border:none;
+            cursor: pointer;
+            outline: none;
+            font-size: 15px;
+            text-transform: uppercase;
+
+            @media only screen and (max-width : $tabletMedia) {
+                width: 50%;
+            }
+        }
+    }
+
+    .random-colors {
+        overflow: hidden;
+        margin-bottom: 50px;
+
+        @media only screen and (max-width : $phoneMedia) {
+            margin-bottom: 0;
+        }
+
+        .gen {
+            float: left;
+            width: 20%;
+
+            @media only screen and (max-width : $phoneMedia) {
+                width: 50%;
+                margin-bottom: 20px;
+            }
+
+            .child-color {
+                height: 200px;
+
+                @media only screen and (max-width : $tabletMedia) {
+                    height: 150px;
+                }
+
+                input {
+                    width:100%;
+                    height:100%;
+                    border:none;
+                    cursor: pointer;
+                    outline: none;
+                    transition: all .5s ease-in-out;
+                    text-align:center;
+                }
+            }
+
+            .hexcolor {
+                padding: 16px 0;
+                text-align:center;
+            }
+
+            .hexcolor h3 {
+                display: inline-block;
+                margin: 0 10px 0 0;
+            }
+
+            .hexcolor i {
+                cursor: pointer;
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                position: relative;
+                background-repeat: no-repeat;
+                background-position: bottom center;
+                background-size: 85%;
+            }
+
+            .hexcolor .jfa-copy {
+                margin-left: 5px;
+                background-image: url('../../img/colorSwatch/copy.svg');
+                transition: background-color 0.8s ease;
+
+                .light & {
+                    background-image: url('../../img/colorSwatch/copy-light.svg');
+                    transition: background-color 0.8s ease;
+                }
+            }
+
+            .hexcolor .jfa-lock {
+                margin-left: 8px;
+                background-image: url('../../img/colorSwatch/unlocked.svg');
+                transition: background-color 0.8s ease;
+
+                .light & {
+                    background-image: url('../../img/colorSwatch/unlocked-light.svg');
+                    transition: background-color 0.8s ease;
+                }
+            }
+
+            .hexcolor .jfa-lock.active {
+                background-image: url('../../img/colorSwatch/locked.svg');
+                transition: background-color 0.8s ease;
+
+                .light & {
+                    background-image: url('../../img/colorSwatch/locked-light.svg');
+                    transition: background-color 0.8s ease;
+                }
+            }
+
+            i .tooltiptext {
+                visibility: hidden;
+                position: absolute;
+                z-index: 1;
+                bottom: 150%;
+                left: 50%;
+                margin-left: -25px;
+                padding: 8px 20px;
+                background-color: $dark;
+                color: $text-color;
+                text-align: center;
+                opacity: 0;
+                transition: opacity 0.3s;
+                font-family: 'Lato', sans-serif;
+            }
+
+            i .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: $dark transparent transparent transparent;
+            }
+
+            i:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+
+    .wrap-text {
+        overflow: hidden;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 2%;
+
+        @media only screen and (max-width : $phoneMedia) {
+            display: none;
+        }
+    }
+
+    .legend,
+    .intro {
+        float: left;
+        width: 48%;
+        min-height: 188px;
+        padding: 30px;
+        border: 1px solid $dark;
+        color: #8e8e8e;
+        box-shadow: 0 0 5px $dark;
+        transition: background-color 0.8s ease;
+        transition: color 0.8s ease;
+
+        .light & {
+            box-shadow: 0 0 5px #ddd;
+            color: lighten($dark-light, 35%);
+            border-color: $light-dark;
+            transition: color 0.8s ease;
+            transition: border-color 0.8s ease;
+        }
+
+        @media only screen and (max-width : $tabletMedia) {
+            padding: 20px;
+        }
+
+        p {
+            line-height: 24px;
+        }
+    }
+
+    .intro a {
+        color: darken($light, 23%);
+        text-decoration: none;
+        transition: color 0.8s ease;
+
+        .light & {
+            color: darken($dark, 30%);
+            transition: color 0.8s ease;
+        }
+    }
+
+    .legend {
+        margin-right: 4%;
+
+        p {
+            margin-bottom: 10px;
+
+            &.last {  margin-bottom: 0; }
+        }
+
+        i {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 10px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            transition: background-image 0.8s ease;
+        }
+
+        .lock {
+            background-image: url('../../img/colorSwatch/unlocked.svg');
+
+            .light & {
+                background-image: url('../../img/colorSwatch/unlocked-legend-light.svg');
+                transition: background-image 0.8s ease;
+            }
+        }
+
+        .copy {
+            background-image: url('../../img/colorSwatch/copy.svg');
+
+            .light & {
+                background-image: url('../../img/colorSwatch/copy-legend-light.svg');
+                transition: background-image 0.8s ease;
+            }
+        }
+
+        .picker {
+            background-image: url('../../img/colorSwatch/picker.svg');
+
+            .light & {
+                background-image: url('../../img/colorSwatch/picker-light.svg');
+                transition: background-image 0.8s ease;
+            }
+        }
+
+        .moon {
+            background-image: url('../../img/colorSwatch/moon-legend.svg');
+
+            .light & {
+                background-image: url('../../img/colorSwatch/moon-legend-light.svg');
+                transition: background-image 0.8s ease;
+            }
+        }
+    }
+}
+
+.wrap-default {
+    overflow: hidden;
+    width: 100%;
+    background-color: $dark;
+    transition: background-color 0.8s ease;
+
+    .default-layout {
+        overflow: hidden;
+        max-width: 1080px;
+        margin: 0 auto 40px;
+    }
+
+    .light & {
+        background-color: $light-dark;
+        transition: background-color 0.8s ease;
+    }
+
+    .title h2 {
+        padding: 50px 0;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 25px;
+
+        p {
+            display: block;
+            margin-top: 10px;
+            text-transform: capitalize;
+            font-size: 14px;
+            color: darken($light, 35%);
+            transition: color 0.8s ease;
+
+            .light & {
+                color: lighten($dark, 40%);
+                transition: color 0.8s ease;
+            }
+        }
+    }
+
+    .default {
+        float: left;
+        width: 50%;
+        margin-bottom: 25px;
+        padding: 1% 3%;
+        box-sizing: border-box;
+
+        @media only screen and (max-width : $tabletMedia) {
+            width: 100%;
+        }
+
+        li {
+            float: left;
+            display: block;
+            width: 20%;
+            height: 80px;
+            position: relative;
+
+            p {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                font-size: 11px;
+                color: $light;
+            }
+
+            .bglight {
+                color: $dark;
+            }
+        }
+    }
+
+    .footer {
+        padding: 30px 0;
+        font-size: 11px;
+        text-align: center;
+        color: darken($light, 35%);
+        transition: color 0.8s ease;
+
+        .light & {
+            color: lighten($dark, 40%);
+            transition: color 0.8s ease;
+        }
+    }
+}

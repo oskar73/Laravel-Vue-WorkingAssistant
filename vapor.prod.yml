@@ -1,0 +1,26 @@
+id: 47493
+name: bizinaboxsite
+asset-domain: assets.bizinaboxsite.com
+separate-vendor: true
+environments:
+    production:
+        balancer: bizinabox-balancer
+        memory: 1024
+        timeout: 120
+        cli-memory: 512
+        cli-timeout: 600
+        queue-memory: 1024
+        queue-concurrency: 100
+        concurrency: 200
+        queues:
+          - default
+        runtime: docker
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
+            - 'npm install --save --legacy-peer-deps && npm run prod && rm -rf node_modules && rm -rf public/assets/vendors/contentbuilder'
+        deploy:
+          - 'php artisan --version'
+          - 'php artisan migrate --force'
+        domain:
+          - '*.bizinaboxsite.com'

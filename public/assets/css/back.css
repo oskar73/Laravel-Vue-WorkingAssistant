@@ -1,0 +1,153 @@
+html, body {
+    font-family:sans-serif, Arial;
+}
+.m-content--skin-light2 .m-body {
+    background-color:#f2f6f8;
+}
+.m-aside-left {
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    transition: margin .2s ease-in-out;
+}
+.m-aside-left {
+    width: 264px;
+    border-left: 3px solid #32a506;
+}
+.m-menu__link-text, .m-menu__item .m-menu__ver-arrow, .m-menu__item .m-menu__link-icon {
+    color:#333 !important;
+    text-transform: uppercase !important;
+}
+.m-menu__item.m-menu__item--active .m-menu__link {
+    background-color: #e4eaee !important;
+}
+.m-content--skin-light2 .m-aside-menu .m-menu__nav>.m-menu__item.m-menu__item--expanded>.m-menu__link>.m-menu__item-here, .m-content--skin-light2 .m-aside-menu .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__link>.m-menu__item-here {
+    border-color:#e91e63 !important;
+    border-width: 25px 5px 25px 0;
+}
+.m-aside-menu .m-menu__nav>.m-menu__item>.m-menu__heading, .m-aside-menu .m-menu__nav>.m-menu__item>.m-menu__link {
+    height:50px;
+}
+.m-aside-menu.m-aside-menu--skin-light .m-menu__nav>.m-menu__item.m-menu__item--open>.m-menu__heading, .m-aside-menu.m-aside-menu--skin-light .m-menu__nav>.m-menu__item.m-menu__item--open>.m-menu__link {
+    background-color: #e4eaee !important;
+}
+.m-menu__item--open {
+    /*background-color: #f2f6f8 !important;*/
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+}
+.m-menu__item--open .m-menu__toggle {
+    background-color: #e4eaee !important;
+}
+.m-menu__item--open .m-menu__submenu .m-menu__item--active, .m-menu__item--open .m-menu__submenu .m-menu__link:hover {
+    background-color: #f1f7fb !important;
+}
+/*.m-menu__item {*/
+/*    border-bottom: 0.1px solid #fff;*/
+/*}*/
+/*.m-menu__subnav .m-menu__item {*/
+/*    border-bottom: none;*/
+/*}*/
+.m-menu__link {
+    transition:0.2s ease;
+}
+.m-menu__link:hover {
+    width: 100%;
+    background-color: #e4eaee !important;
+}
+.m-aside-menu .m-menu__nav>.m-menu__item>.m-menu__link {
+    padding:9px 20px;
+}
+.m-stack .m-brand {
+    background: #fff;
+    border-left: 3px solid #32a506;
+    width: 264px;
+    padding:0px 15px;
+    transition: margin .2s ease-in-out;
+}
+.m-header {
+    background-color:transparent !important;
+    box-shadow:none !important;
+}
+.m-brand .m-brand__tools .m-brand__toggler span,
+.m-brand .m-brand__tools .m-brand__toggler span:hover,
+.m-brand .m-brand__tools .m-brand__toggler span,
+.m-brand .m-brand__tools .m-brand__toggler span:hover,
+.m-brand .m-brand__tools .m-brand__toggler span::before,
+.m-brand .m-brand__tools .m-brand__toggler span::after,
+.m-brand .m-brand__tools .m-brand__toggler span::before:hover,
+.m-brand .m-brand__tools .m-brand__toggler span::after:hover{
+    background-color:#333 !important;
+}
+.m-portlet {
+    box-shadow: none;
+    background-color: #fff;
+    border: 1px solid #c6d2d9;
+}
+.m-subheader {
+    padding:0px 30px;
+}
+.m-body .m-content {
+    padding:10px 30px;
+}
+.m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-nav__link-icon {
+    color: #333;
+}
+.m-topbar__userpic img {
+    border-radius:50%;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+.m-topbar__userpic img:hover {
+    box-shadow: 0 5px 10px rgba(0,0,0,.3);
+}
+.m-portlet .m-portlet__head {
+    min-height:40px;
+    height:auto !important;
+    background-color:#e4eaee;
+}
+.m-subheader .m-subheader__breadcrumbs.m-nav>.m-nav__item.m-nav__item--home>.m-nav__link>.m-nav__link-icon.la-home
+{
+    width:15px;
+}
+@media (min-width: 1025px)
+{
+    .m-aside-left--fixed .m-body {
+        padding-left: 264px;
+    }
+    .m-brand--minimize .m-brand {
+        width:78px;
+    }
+    .m-aside-left--fixed.m-aside-left--minimize-hover .m-aside-left {
+        width: 264px;
+    }
+    .m-stack__item.m-brand__tools {
+        width:40px;
+    }
+
+    .m-topbar .m-topbar__nav.m-nav>.m-nav__item:hover, .m-topbar .m-topbar__nav.m-nav>.m-nav__item.m-dropdown--open {
+        background-color:#f2f6f8 !important;
+    }
+}
+@media (max-width: 1024px)
+{
+    .m-aside-left--on .m-aside-left-close {
+        background-color:#fff;
+    }
+    .m-aside-left-close.m-aside-left-close--skin-dark>i {
+        color:#333;
+    }
+
+    .m-stack .m-brand {
+        width: 100%;
+    }
+    .m-stack__item.m-brand__tools {
+        width:160px;
+    }
+
+    .m-topbar .m-topbar__nav.m-nav>.m-nav__item:hover, .m-topbar .m-topbar__nav.m-nav>.m-nav__item.m-dropdown--open {
+        background-color:#fff !important;
+    }
+    .m-topbar {
+        border-top:1px solid #eee;
+    }
+}

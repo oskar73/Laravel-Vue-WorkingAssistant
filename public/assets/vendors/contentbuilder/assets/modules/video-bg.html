@@ -1,0 +1,197 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <style>
+        html { height:100%; }
+        body { margin:3px 25px 20px;background: rgba(0,0,0,0);height:100%;overflow:hidden;font-family:Sans-Serif;font-size:17px;line-height:1.7; }
+        label {padding-bottom:15px;display:inline-block;box-sizing: border-box;}
+        .inptext {font-size:18px;letter-spacing:1px;border:rgba(127, 127, 127, 0.32) 1px solid;padding:10px;box-sizing: border-box;}
+        .inptext:focus {outline:none}
+        #upload_video_me {width: 1px;visibility: hidden;height:1px;}
+        .upload_video_btn {
+            position:absolute;
+            right:0;
+            top:0;
+            bottom:0;
+            padding:6px 10px;
+            border-left:1px solid #d6d6d6;
+            cursor:pointer;
+        }
+        .upload_video_btn:hover {
+            background-color:#eee;
+        }
+    </style>
+</head>
+<body>
+
+<form id="videoform" method="post" action="" enctype="multipart/form-data">
+    <label id="lblMP4" for="txtMP4" style="width:100%;padding-bottom:0px;">Video URL:</label>
+        <div style="position:relative">
+            <input id="txtMP4" class="inptext" type="text" style="width:100%;letter-spacing:0px;font-size:16px;padding-right: 130px;" value="" />
+            <input type="file" id="upload_video_me" name="fileVideo" style="position:absolute; visibility:hidden"/>
+            <label for="upload_video_me" class="upload_video_btn">
+                Upload Video
+            </label>
+        </div>
+    <br />
+    <label id="lblPoster" for="txtPoster" style="width:100%">Video Poster:
+        <input id="txtPoster" class="inptext" type="text" style="width:100%;letter-spacing:0px;font-size:16px;" value="" />
+    </label>
+    <br />
+    <label id="lblOverlay" for="txtOverlay">Overlay opacity:
+        <input id="txtOverlay" class="inptext" type="text" style="width:80px;" value="0.25" />
+    </label>
+</form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            var settings = getSettings();
+
+            if (settings != 'undefined') {
+                try {
+                    var json = $.parseJSON(settings);
+                    $(json).each(function (i, val) {
+                        $.each(val, function (k, v) {
+                            if (k == 'mp4') jQuery("#txtMP4").val(v);
+                            if (k == 'poster') jQuery("#txtPoster").val(v);
+                            if (k == 'overlay') jQuery("#txtOverlay").val(v);
+                        });
+                    });
+                } catch (e) { }
+            }
+
+            jQuery('#txtMP4').on('blur', function () {
+                construct();
+            });
+
+            jQuery('#txtPoster').on('blur', function () {
+                construct();
+            });
+
+            jQuery('#txtOverlay').on('blur', function () {
+                construct();
+            });
+
+            construct();
+
+            /*
+            Video Upload Custom 2020.09.21
+            */
+            $('#upload_video_btn').click(function(){
+                $('#upload_video_me').click();
+            });
+            var video_upload = getModuleConfig('moduleSaveVideoHandler');
+
+            jQuery('#upload_video_me').bind('change', function (e) {
+                jQuery('.upload_video_btn').html("Uploading...");
+                jQuery('#videoform').submit();
+            });
+
+            jQuery('#videoform').on("submit", function(e) {
+                e.preventDefault();
+                console.log("here")
+                $.ajax({
+                    url:video_upload,
+                    method:"POST",
+                    data:new FormData(this),
+                    dataType:'JSON',
+                    contentType:false,
+                    cache:false,
+                    processData:false,
+                    success:function(result)
+                    {
+                        jQuery('.upload_video_btn').html("Upload Video");
+                        console.log(result);
+                        if(result.status===1)
+                        {
+                            $("#txtMP4").val(result.data);
+                            construct();
+                        }else {
+                            for(var key in result.data)
+                            {
+                                var error = result.data[key];
+                                alert(error)
+                            }
+                        }
+                    },
+                    error:function(e)
+                    {
+                        console.log(e)
+                    }
+                })
+            })
+        });
+
+
+        function getModuleConfig(key) {
+            var config; //Use existing handler to save/upload image.
+            if (parent.jQuery('.is-wrapper').length > 0) {
+                config = parent.jQuery('.is-wrapper').data('contentbox').settings.moduleConfig;
+            } else {
+                config = parent._cb.settings.moduleConfig
+            }
+            var result = '';
+            $(config).each(function (i, val) {
+                result = eval('val.' + key);
+            });
+            return result;
+        }
+
+
+        function construct() {
+            var html = '<video class="is-video-bg" poster="' + jQuery("#txtPoster").val() + '" playsinline autoplay muted loop>' +
+                    '<source src="' + jQuery("#txtMP4").val() + '" type="video/mp4">' +
+                    '</video>' +
+                    '<div class="is-overlay-video" style="opacity:' + jQuery("#txtOverlay").val() + '"></div>';
+            setHtml(html);
+
+            var settings = '[{"mp4":"' + jQuery("#txtMP4").val() + '","poster":"' + jQuery("#txtPoster").val() + '","overlay":' + jQuery("#txtOverlay").val() + '}]';
+            setSettings(settings);
+        }
+
+
+
+        /*
+        COMMON METHODS FOR MODULE.
+        */
+        function getHtml() {
+            var $activeModule = parent.jQuery("[data-module-active]");
+            return decodeURIComponent($activeModule.attr("data-html"));
+        }
+
+        function getSettings() {
+            var $activeModule = parent.jQuery("[data-module-active]");
+            return decodeURIComponent($activeModule.attr('data-settings'));
+        }
+
+        function setHtml(html) {
+            parent.jQuery('#hidModuleCode').val(html);
+        }
+
+        function setSettings(settings) {
+            parent.jQuery('#hidModuleSettings').val(settings);
+        }
+
+        function makeid() {//http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            for (var i = 0; i < 2; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            var text2 = "";
+            var possible2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 5; i++)
+                text2 += possible2.charAt(Math.floor(Math.random() * possible2.length));
+
+            return text + text2;
+        }
+
+    </script>
+</body>
+</html>

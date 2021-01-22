@@ -1,0 +1,35 @@
+name: Deploy Production
+
+on:
+  push:
+    branches: [ Production ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer:v2
+          coverage: none
+
+      - name: Require Vapor CLI
+        run: composer global require laravel/vapor-cli
+
+      - name: Install Project Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Deploy Environment
+        run: vapor deploy production --manifest=vapor.prod.yml --commit="${{ github.event.head_commit.id }}" --message="${{ github.event.head_commit.message }}"
+        env:
+          VAPOR_API_TOKEN: ${{ secrets.VAPOR_API_TOKEN }}
