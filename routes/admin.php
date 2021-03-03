@@ -518,7 +518,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
         Route::get('/get', [Admin\Contacts\ContactsController::class, 'getContacts'])->name('getContacts');
         Route::get('/detail/{id}', [Admin\Contacts\ContactsController::class, 'detail'])->name('detail');
         Route::delete('/delete/{id}', [Admin\Contacts\ContactsController::class, 'delete'])->name('delete');
-    });
+    }); 
 });
 
             
